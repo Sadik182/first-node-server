@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
 const port = process.env.PORT || 5000;
+
+//Midle Ware 
+app.use(cors());
+app.use(express.json());
 
 const users = [
     {id: 1, name: 'Md. Sadikur Rahman', email: 'Sadik@gmail.com', phone: 01715925172},
