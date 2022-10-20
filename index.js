@@ -26,6 +26,13 @@ app.get('/user/:id', (req, res) => {
     console.log(id);
     const user = users.find(uid => uid.id === id);
     res.send(user);
+});
+
+app.post('/users', (req, res) => {
+    const user = req.body;
+    user.id = users.length + 1;
+    users.push(user);
+    res.send(user);
 })
 
 app.listen(port, () => {
