@@ -1,8 +1,8 @@
 const express = require('express');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
 const cors = require('cors')
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
 
 //Midle Ware 
 app.use(cors());
@@ -14,13 +14,23 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const database = client.db('UsersData');
-        const usersCollection = database.collection('Users');
+        await client.connect();
+        const database = client.db('usersData');
+        const usersCollection = database.collection('users');
         console.log('DataBase Connected');
+
+        app.get('/users', async(req, res) => {
+            const query = {};
+            const cursor = usersCollection.find(query);
+            const users = await cursor.toArray();
+            res.send(users);
+        });
+
+        
         
     } 
     finally {
-       await client.close();
+    //    await client.close();
     }
 
 }
