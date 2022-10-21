@@ -19,6 +19,7 @@ async function run() {
         const usersCollection = database.collection('users');
         console.log('DataBase Connected');
 
+        // Get API
         app.get('/users', async(req, res) => {
             const query = {};
             const cursor = usersCollection.find(query);
@@ -26,6 +27,15 @@ async function run() {
             res.send(users);
         });
 
+        // Post API
+
+        app.post('/users', async(req, res) => {
+            const newUsers = req.body;
+            const result = await usersCollection.insertOne(newUsers);
+            res.send(result);
+        })
+
+        
         
         
     } 
