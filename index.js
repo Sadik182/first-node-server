@@ -44,6 +44,20 @@ async function run() {
             const result = await usersCollection.deleteOne(query);
             res.send(result);
 
+        });
+
+        //Update API
+
+        app.put('/users/:id', (req, res) => {
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)}
+            const options = {upsert: true}
+            const updateDoc = {
+                $set: {
+                    
+                }
+            }
+
         })
 
         
