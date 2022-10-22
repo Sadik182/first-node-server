@@ -27,6 +27,13 @@ async function run() {
             const users = await cursor.toArray();
             res.send(users);
         });
+        // Get Single User API
+        app.get('/users/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await usersCollection.findOne(query);
+            res.send(result);
+        });
 
         // Post API
 
@@ -48,16 +55,13 @@ async function run() {
 
         //Update API
 
-        app.put('/users/:id', (req, res) => {
+        app.put('/users/:id', async (req, res) => {
             const id = req.params.id;
             const filter = {_id: ObjectId(id)}
             const options = {upsert: true}
-            const updateDoc = {
-                $set: {
-                    
-                }
-            }
-
+            const updateDoc = { $set: req.body }
+            const result = await usersCollection.updateOne(filter, updateDoc, options)
+            res.send(result);
         })
 
         
